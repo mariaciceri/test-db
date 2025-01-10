@@ -8,7 +8,9 @@
         {% for transaction in transactions %}
         <li>
             <div>
-                <p>€ {{ transaction.transaction_amount }} - <span>{{ transaction.transaction_date }}</span></p>
+                <p>€ {{ transaction.transaction_amount }} -
+                    <span>{{ transaction.transaction_date }}</span>
+                </p>
             </div>
         </li>
         {% endfor %}
@@ -19,8 +21,10 @@
         {% for plan in plans %}
         <li>
             <div>
-                <p>Available plans for you: {{ plan.payment_plan }} <span>{{ plan.payment_amount }} starting in {{
-                        plan.payment_date }}</span></p>
+                <p>Available plans for you: {{ plan.payment_plan }}
+                    <span>{{ plan.payment_amount }} starting in
+                        {{ plan.payment_date }}</span>
+                </p>
             </div>
         </li>
         {% endfor %}
@@ -37,11 +41,20 @@
             </div>
         </li>
         {% endfor %}
-        <button class="add-note">Add Note</button>
+        <div>
+            <button class="add-note">Add Note</button>
+        </div>
     </ul>
 </div>
 <aside>
-    <div class="popup hidden"></div>
+    <div class="popup hidden">
+        <button class="close-popup">X</button>
+        <form method="POST">
+            {% csrf_token %}
+            <textarea name="note" id="note" cols="30" rows="10" placeholder="Write your note here!"></textarea>
+            <button class="submit-note">Submit</button>
+        </form>
+    </div>
 </aside>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
