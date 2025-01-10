@@ -1,0 +1,48 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<h1>Hi, {{ customer.name }}. Here is your activity:</h1>
+<div>
+    <ul>
+        {% for transaction in transactions %}
+        <li>
+            <div>
+                <p>€ {{ transaction.transaction_amount }} - <span>{{ transaction.transaction_date }}</span></p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    <ul>
+        {% for plan in plans %}
+        <li>
+            <div>
+                <p>Available plans for you: {{ plan.payment_plan }} <span>{{ plan.payment_amount }} starting in {{
+                        plan.payment_date }}</span></p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    <h1>Notes</h1>
+    <ul>
+        {% for note in notes %}
+        <li>
+            <div>
+                <p>{{ note.note }}</p>
+                <span>{{ note.created_at }}</span>
+            </div>
+        </li>
+        {% endfor %}
+        <button class="add-note">Add Note</button>
+    </ul>
+</div>
+<aside>
+    <div class="popup hidden"></div>
+</aside>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/notes.js' %}"></script>
