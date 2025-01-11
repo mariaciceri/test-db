@@ -13,7 +13,8 @@
     <div class="transactions-and-plans">
         <h1>Hi, {{ customer.name }}. Here is your activity:</h1>
         <div class="transactions">
-            <ul>
+            <h2 class="transactions-display"><span class="plus">+</span> Transactions:</h2>
+            <ul class="transactions-list">
                 {% for transaction in transactions %}
                 <li>
                     <div>
@@ -26,12 +27,12 @@
             </ul>
         </div>
         <div class="plans">
-            <ul>
-                <h3>Available plans for you:</h3>
+            <h2 class="plans-display"><span class="plus">+</span> Available plans for you: </h2>
+            <ul class="plans-list">
                 {% for plan in plans %}
                 <li>
                     <div>
-                        <p>{{ plan.payment_plan}} : Pay on <strong>{{ plan.payment_date|date:"d M, Y" }}</strong> the
+                        <p>• {{ plan.payment_plan}} : Pay on <strong>{{ plan.payment_date|date:"d M, Y" }}</strong> the
                             amount of
                             €{{ plan.payment_amount }}.</p>
                     </div>
@@ -42,11 +43,11 @@
     </div>
     <div class="notes">
         <div class="centralized-notes">
-            <h2>Notes</h2>
-            <div>
+            <h2 class="notes-display"><span class="plus">+</span> Notes</h2>
+            <div class="notes-accordion">
                 <button class="add-note">Add Note</button>
             </div>
-            <ul class="list-item">
+            <ul class="notes-accordion">
                 {% for note in notes %}
                 <li id="note-{{ note.id }}">
                     <div class="note">
@@ -69,8 +70,9 @@
             </ul>
         </div>
         <aside>
+            <div class="overlay hidden"></div>
             <div class="popup hidden">
-                <button class="close-popup">X</button>
+                <button class="close-popup">&times;</button>
                 <form method="POST" id="note-form">
                     {% csrf_token %}
                     <textarea name="note" id="note" cols="30" rows="10" placeholder="Write your note here!"
@@ -78,13 +80,6 @@
                     <button class="submit-note">Save</button>
                 </form>
             </div>
-        </aside>
-        <aside>
-            {% if messages %}
-            {% for message in messages %}
-            <p class="alert">{{ message }} <span class="confirm">Ok</span></p>
-            {% endfor %}
-            {% endif %}
         </aside>
     </div>
 
