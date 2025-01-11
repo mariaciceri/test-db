@@ -15,7 +15,6 @@ def customer_view(request):
     if request.method == "POST" :
         note_form = CollectorNoteForm(data=request.POST)
         if note_form.is_valid():
-            print("testing")
             note = note_form.save(commit=False)
             note.customer = customer
             note.save()
