@@ -17,7 +17,7 @@ class CustomerTransaction(models.Model):
 class CollectorNote(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='notes')
     note = models.CharField(max_length=255)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.customer} - {self.note}'

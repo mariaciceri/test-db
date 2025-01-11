@@ -1,61 +1,96 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!DOCTYPE html>
+<html class="h-100" lang="en">
 
-<h1>Hi, {{ customer.name }}. Here is your activity:</h1>
-<div>
-    <ul>
-        {% for transaction in transactions %}
-        <li>
-            <div>
-                <p>€ {{ transaction.transaction_amount }} -
-                    <span>{{ transaction.transaction_date }}</span>
-                </p>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-<div>
-    <ul>
-        {% for plan in plans %}
-        <li>
-            <div>
-                <p>Available plans for you: {{ plan.payment_plan }}
-                    <span>{{ plan.payment_amount }} starting in
-                        {{ plan.payment_date }}</span>
-                </p>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-<div>
-    <h1>Notes</h1>
-    <ul>
-        {% for note in notes %}
-        <li>
-            <div>
-                <p>{{ note.note }}</p>
-                <span>{{ note.created_at }}</span>
-            </div>
-        </li>
-        {% endfor %}
-        <div>
-            <button class="add-note">Add Note</button>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Activity</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="transactions-and-plans">
+        <h1>Hi, {{ customer.name }}. Here is your activity:</h1>
+        <div class="transactions">
+            <ul>
+                {% for transaction in transactions %}
+                <li>
+                    <div>
+                        <p><strong>€ {{ transaction.transaction_amount }}</strong> -
+                            <span>{{ transaction.transaction_date|date:"d M, Y" }}</span>
+                        </p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
-    </ul>
-</div>
-<aside>
-    <div class="popup hidden">
-        <button class="close-popup">X</button>
-        <form method="POST">
-            {% csrf_token %}
-            <textarea name="note" id="note" cols="30" rows="10" placeholder="Write your note here!"></textarea>
-            <button class="submit-note">Submit</button>
-        </form>
+        <div class="plans">
+            <ul>
+                <h3>Available plans for you:</h3>
+                {% for plan in plans %}
+                <li>
+                    <div>
+                        <p>{{ plan.payment_plan}} : Pay on <strong>{{ plan.payment_date|date:"d M, Y" }}</strong> the
+                            amount of
+                            €{{ plan.payment_amount }}.</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-</aside>
+    <div class="notes">
+        <div class="centralized-notes">
+            <h2>Notes</h2>
+            <div>
+                <button class="add-note">Add Note</button>
+            </div>
+            <ul class="list-item">
+                {% for note in notes %}
+                <li id="note-{{ note.id }}">
+                    <div class="note">
+                        <div>
+                            <p>{{ note.note }}</p>
+                            <button class="edit-note" data-note_id="{{ note.id }}">
+                                &#9998;
+                            </button>
+                            <button class="delete-note" data-note_id="{{ note.id }}">
+                                &times;
+                            </button>
+                        </div>
+                        <span>
+                            {{ note.created_at|date:"d M, Y" }}
+                        </span>
+                        <hr>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <aside>
+            <div class="popup hidden">
+                <button class="close-popup">X</button>
+                <form method="POST" id="note-form">
+                    {% csrf_token %}
+                    <textarea name="note" id="note" cols="30" rows="10" placeholder="Write your note here!"
+                        maxlength="255" required></textarea>
+                    <button class="submit-note">Save</button>
+                </form>
+            </div>
+        </aside>
+        <aside>
+            {% if messages %}
+            {% for message in messages %}
+            <p class="alert">{{ message }} <span class="confirm">Ok</span></p>
+            {% endfor %}
+            {% endif %}
+        </aside>
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/notes.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/notes.js' %}"></script>
+
+</body>
+
+</html>
