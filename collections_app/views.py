@@ -5,6 +5,19 @@ from .models import Customer, CustomerTransaction, CollectorNote, PaymentPlan
 from .forms import CollectorNoteForm
 
 def customer_view(request):
+    """
+    Display customer information, transactions, notes, and payment plans.
+
+    **Context**
+    ``customer``
+        An instance of :model:`collections_app.Customer`
+    ``transactions``
+        A queryset of :model:`collections_app.CustomerTransaction`
+    ``notes``
+        A queryset of :model:`collections_app.CollectorNote`
+    ``plans``
+        A queryset of :model:`collections_app.PaymentPlan`
+    """
     customer = Customer.objects.first()
     transactions = (
         CustomerTransaction.objects.all().order_by('-transaction_date')
@@ -37,6 +50,17 @@ def customer_view(request):
     )
 
 def edit_note(request, note_id):
+    """
+    Display a form to edit a note.
+
+    **Context**
+    ``customer``
+    An instance of :model:`collections_app.Customer`
+    ``note``
+        The note to be edited
+    ``noteForm``
+        An instance of :form:`collections_app.CollectorNoteForm`
+    """
     if request.method == "POST":
         customer = Customer.objects.first()
         note = get_object_or_404(CollectorNote, pk=note_id)
@@ -57,6 +81,13 @@ def edit_note(request, note_id):
 
 
 def delete_note(request, note_id):
+    """
+    Delete a note.
+
+    **Context**
+    ``note``
+        The note to be deleted
+    """
     if request.method == "POST":
         note = get_object_or_404(CollectorNote, pk=note_id)
         note.delete()

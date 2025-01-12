@@ -74,10 +74,9 @@ button {
 /* Information layout */
 .transactions-and-plans {
     width: 45%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     padding: 0 20px;
+    align-self: flex-start;
+    padding-top: 20px;
 }
 
 .transactions {
@@ -89,6 +88,11 @@ button {
     border-radius: 10px;
 }
 
+.transactions-list {
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
 /* Plans layout */
 .plans {
     font-size: large;
@@ -96,6 +100,7 @@ button {
     padding: 10px;
     background-color: var(--secondary-color);
     border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 /* Notes Layout */
@@ -207,6 +212,7 @@ button:hover {
 
     .transactions-and-plans {
         height: auto;
+        padding: 0;
     }
 
     .transactions-and-plans,
@@ -237,6 +243,11 @@ button:hover {
     .transactions-list {
         display: none;
         padding: 10px;
+    }
+
+    .transactions-list {
+        max-height: none;
+        overflow-y: visible;
     }
 
     .transactions,
