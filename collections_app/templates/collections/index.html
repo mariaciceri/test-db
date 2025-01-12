@@ -45,7 +45,7 @@
         <div class="centralized-notes">
             <h2 class="notes-display"><span class="plus">+</span> Notes</h2>
             <div class="notes-accordion">
-                <button class="add-note">Add Note</button>
+                <button class="add-note" title="Add a new note">Add Note</button>
             </div>
             <ul class="notes-accordion">
                 {% for note in notes %}
@@ -53,10 +53,10 @@
                     <div class="note">
                         <div>
                             <p>{{ note.note }}</p>
-                            <button class="edit-note" data-note_id="{{ note.id }}">
+                            <button class="edit-note" title="Edit note" data-note_id="{{ note.id }}">
                                 &#9998;
                             </button>
-                            <button class="delete-note" data-note_id="{{ note.id }}">
+                            <button class="delete-note" title="Delete note" data-note_id="{{ note.id }}">
                                 &times;
                             </button>
                         </div>
@@ -72,12 +72,12 @@
         <aside>
             <div class="overlay hidden"></div>
             <div class="popup hidden">
-                <button class="close-popup">&times;</button>
+                <button class="close-popup" title="Close">&times;</button>
                 <form method="POST" id="note-form">
                     {% csrf_token %}
                     <textarea name="note" id="note" cols="30" rows="10" placeholder="Write your note here!"
                         maxlength="255" required></textarea>
-                    <button class="submit-note">Save</button>
+                    <button class="submit-note" title="Save note">Save</button>
                 </form>
             </div>
         </aside>
